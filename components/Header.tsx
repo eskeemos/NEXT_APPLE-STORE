@@ -6,7 +6,7 @@ import { MagnifyingGlassIcon, ShoppingBagIcon, UserIcon } from '@heroicons/react
 function Header() {
   const session = false;
   return (
-    <header className='sticky top-0 z-30 flex w-full items-center justify-between bg-[#e5e5e5] p-4'>
+    <header className='sticky h-16 top-0 z-30 flex w-full items-center justify-between bg-[#E7ECEE] shadow-lg p-4'>
       <div className='flex items-center justify-center md:w-1/5'>
         <Link href="/">
           <Image src='https://rb.gy\vsvv2o' width={25} height={10} alt='apple-logo' className='cursor-pointer opacity-75 hover:opacity-100 transition-opacity' />

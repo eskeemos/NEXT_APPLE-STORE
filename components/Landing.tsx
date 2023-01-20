@@ -4,14 +4,14 @@ import Button from './Button'
 
 function Landing() {
   return (
-    <section className='sticky top-0 mx-auto flex h-screen max-w-[1350px] items-center justify-center px-8'>
+    <section className='sticky top-[64px] mx-auto flex h-screen max-w-[1350px] items-center justify-center px-8'>
       <div className='space-y-8'>
         <h1 className='space-y-3 text-5xl font-semibold tracking-wide lg:text-6xl'>
           <span className='block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent'>Powered</span>
           <span className="block">By Intelllect</span>
           <span className="block">Driven By Values</span>
         </h1>
-        <div>
+        <div className='space-x-8'>
           <Button title="Buy Now" />
           <a className="link">Learn More</a>
         </div>
