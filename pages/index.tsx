@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react'
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import Header from '../components/Header'
 import Landing from '../components/Landing'
@@ -48,4 +48,10 @@ const Home: NextPage = () => {
 
 export default Home
 
-// export const 
+export const getServerSideProps: GetServerSideProps = async () => {
+  // const categories = await fetchCategories();
+
+  return {
+    props: {}
+  }
+}

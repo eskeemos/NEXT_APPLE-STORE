@@ -9,7 +9,7 @@ function Header() {
     <header className='sticky h-16 top-0 z-30 flex w-full items-center justify-between bg-[#E7ECEE] shadow-lg p-4'>
       <div className='flex items-center justify-center md:w-1/5'>
         <Link href="/">
-          <Image src='https://rb.gy\vsvv2o' width={25} height={10} alt='apple-logo' className='cursor-pointer opacity-75 hover:opacity-100 transition-opacity' />
+          <Image src='https://rb.gy\vsvv2o' width={25} height={10} alt='apple-logo' className='cursor-pointer opacity-75 hover:opacity-100 w-auto  transition-opacity' />
         </Link>
       </div>
       <div className="hidden flex-1 items-center justify-center space-x-8 md:flex">
