@@ -3,15 +3,24 @@ import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import Header from '../components/Header'
 import Landing from '../components/Landing'
-import { fetchCategories } from '../utils/fetchCategories'
+import Product from '../components/Product'
+import { fetchCategories } from '../utils/fetchCategories';
+import { fetchProducts } from '../utils/fetchProducts'
 
 type Props = {
-  categories: Category[]
+  categories: Category[];
+  products: Product[];
 }
 
-const Home = ({categories}: Props) => {
-  console.log(categories);
+const Home = ({ categories, products }: Props) => {
+  console.log(products);
   
+  const showProducts = (category: number) => {
+    return products.filter((product) => 
+      product.category?._ref === categories[category]._id)
+      .map((product) => <Product product={product} key={product._id} />)
+  }
+
   return (
     <div>
       <Head>
@@ -32,8 +41,8 @@ const Home = ({categories}: Props) => {
                   key={category._id}
                   id={category._id}
                   className={({ selected }) =>
-                      `whitespace-nowrap rounded-t-lg py-3 px-5 text-sm font-light outline-none md:py-4 md:px-6 md:text-base transition-colors ${selected
-                      ? 'bg-[#35383C] text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-[length:100%_2px] bg-no-repeat bg-bottom' 
+                    `whitespace-nowrap rounded-t-lg py-3 px-5 text-sm font-light outline-none md:py-4 md:px-6 md:text-base transition-colors ${selected
+                      ? 'bg-[#35383C] text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-[length:100%_2px] bg-no-repeat bg-bottom'
                       : 'border-b-2 border-[#35383C] text-[#747474]'}`
                   }
                 >
@@ -42,9 +51,9 @@ const Home = ({categories}: Props) => {
               ))}
             </Tab.List>
             <Tab.Panels className="mx-auto max-w-fit pt-10 pb-24 sm:px-4">
-              {/* {[0,1,2,3].map((index) => (
-                <Tab.Panel className="tabPanel">{showProducts(index)}</Tab.Panel>
-              ))} */}
+              {[0,1,2,3].map((index) => (
+                <Tab.Panel className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">{showProducts(index)}</Tab.Panel>
+              ))}
             </Tab.Panels>
           </Tab.Group>
         </div>
@@ -57,10 +66,11 @@ export default Home
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const categories = await fetchCategories();
+  const products = await fetchProducts();
 
   return {
     props: {
-      categories
+      categories, products
     }
   }
 }
