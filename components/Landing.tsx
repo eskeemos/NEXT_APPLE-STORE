@@ -17,7 +17,7 @@ function Landing() {
         </div>
       </div>
       <div className='relative hidden transition-all h-[450px] w-[450px] duration-500 md:inline lg:h-[650px] lg:w-[600px]'>
-        <Image src="/iphone.png" alt='iphone' width={450} height={450} />
+        <Image src="/iphone.png" alt='iphone' width={450} height={450} className="w-uto" />
       </div>
     </section>
   )
