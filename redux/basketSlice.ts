@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { RootState } from './store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from './store';
 
 interface BasketState {
   items: Product[]
@@ -9,18 +9,39 @@ const initialState: BasketState = {
   items: []
 }
 
-export const counterSlice = createSlice({
-  name: 'counter',
-  // `createSlice` will infer the state type from the `initialState` argument
+export const basketSlice = createSlice({
+  name: 'basket',
   initialState,
   reducers: {
+    addToBasket: (state: BasketState, action: PayloadAction<Product>) => {
+      state.items = [...state.items, action.payload];
+    },
+    removeFromBasket: (state: BasketState, action: PayloadAction<{ id: string }>) => {
+      const index = state.items.findIndex((item: Product) =>
+        item._id === action.payload.id);
 
+      let newBasket = [...state.items];
+
+      if (index >= 0) {
+        newBasket.splice(index, 1);
+      } else {
+        console.log(`Can't remove product with (id: ${action.payload.id}) cause 
+        it's not in the basket`);
+      }
+
+      state.items = newBasket;
+    }
   }
 })
 
-export const { } = counterSlice.actions
+export const { addToBasket, removeFromBasket } = basketSlice.actions
 
-// Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value
+export const selectBasketItems = (state: RootState) => state.basket.items;
+export const selectBasketItemsWithId = (state: RootState, id: string) => {
+  state.basket.items.filter((item: Product) => item._id === id);
+}
+export const selectBasketTotal = (state: RootState) => {
+  state.basket.items.reduce((total: number, item: Product) => (total += item.price), 0);
+}
 
-export default counterSlice.reducer
+export default basketSlice.reducer

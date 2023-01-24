@@ -1,17 +1,28 @@
 import React from 'react'
 import { urlFor } from '../sanity';
 import Image from 'next/image';
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import Button from './Button';
+import { useDispatch } from 'react-redux';
+import { addToBasket } from '../redux/basketSlice';
+import { toast } from 'react-hot-toast';
 
 interface Props {
   product: Product
 }
 
 function Product({ product }: Props) {
+  const dispatch = useDispatch();
   const { title, price } = product;
   const addItemToBasket = () => {
-  
+    dispatch(addToBasket(product));
+    toast.success(`${product.title} added to basket`, {
+      position: 'bottom-center',
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    })
   }
   
   return (

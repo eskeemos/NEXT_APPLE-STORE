@@ -1,6 +1,7 @@
 import { Tab } from '@headlessui/react'
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
+import Basket from '../components/Basket'
 import Header from '../components/Header'
 import Landing from '../components/Landing'
 import Product from '../components/Product'
@@ -13,7 +14,6 @@ type Props = {
 }
 
 const Home = ({ categories, products }: Props) => {
-  console.log(products);
   
   const showProducts = (category: number) => {
     return products.filter((product) => 
@@ -28,6 +28,7 @@ const Home = ({ categories, products }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      <Basket />
       <main className='relative h-[200vh] bg-[#E7ECEE]'>
         <Landing />
       </main>
@@ -52,7 +53,7 @@ const Home = ({ categories, products }: Props) => {
             </Tab.List>
             <Tab.Panels className="mx-auto max-w-fit pt-10 pb-24 sm:px-4">
               {[0,1,2,3].map((index) => (
-                <Tab.Panel className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">{showProducts(index)}</Tab.Panel>
+                <Tab.Panel key={index} className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">{showProducts(index)}</Tab.Panel>
               ))}
             </Tab.Panels>
           </Tab.Group>

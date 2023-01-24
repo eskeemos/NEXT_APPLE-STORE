@@ -2,8 +2,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { MagnifyingGlassIcon, ShoppingBagIcon, UserIcon } from '@heroicons/react/24/outline'
+import { useSelector } from 'react-redux'
+import { selectBasketItems } from '../redux/basketSlice'
 
 function Header() {
+  const items = useSelector(selectBasketItems);
   const session = false;
   return (
     <header className='sticky h-16 top-0 z-30 flex w-full items-center justify-between bg-[#E7ECEE] shadow-sm p-4'>
@@ -22,7 +25,7 @@ function Header() {
         <MagnifyingGlassIcon className="headerIcon" />
         <Link href="/checkout">
           <div className='relative cursor-pointer'>
-            <span className="absolute -right-1 -top-1 z-50 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-[11px] text-white">5</span>
+            <span className="absolute -right-1 -top-1 z-50 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-[11px] text-white">{items.length}</span>
             <ShoppingBagIcon className='headerIcon' />
           </div>
         </Link>
@@ -32,9 +35,9 @@ function Header() {
             "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} alt="avatars" className='cursor-pointer rounded-full' width={34} height={34}
           // onClick={() => signOut()} 
           />
-        ) : (<UserIcon className='headerIcon' 
+        ) : (<UserIcon className='headerIcon'
         // onClick={() => signIn() 
-          />)}
+        />)}
       </div>
     </header>
   )
