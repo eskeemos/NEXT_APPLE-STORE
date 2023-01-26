@@ -25,7 +25,7 @@ function Header() {
         <MagnifyingGlassIcon className="headerIcon" />
         <Link href="/checkout">
           <div className='relative cursor-pointer'>
-            <span className="absolute -right-1 -top-1 z-50 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-[11px] text-white">{items.length}</span>
+            {items.length > 0 && (<span className="absolute -right-1 -top-1 z-50 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-[11px] text-white"> {items.length}</span>)}
             <ShoppingBagIcon className='headerIcon' />
           </div>
         </Link>
