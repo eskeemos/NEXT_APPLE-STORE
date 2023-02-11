@@ -57,4 +57,4 @@ function CheckoutProduct({ id, items }: Props) {
   )
 }
 
-export default CheckoutProduct
+export default CheckoutProduct // 4:30
