@@ -7,7 +7,7 @@ import { selectBasketItems } from '../redux/basketSlice';
 function Basket() {
   const items = useSelector(selectBasketItems);
 
-  if (items.length === 0) return;
+  if (items.length === 0) return <div></div>;
 
   return (
     <Link href="/checkout">

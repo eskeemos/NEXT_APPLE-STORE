@@ -42,12 +42,19 @@ function Checkout() {
       }
     );
 
-    if((checkoutSession as any).statusCode === 500 ){
+    if ((checkoutSession as any).statusCode === 500) {
       console.error((checkoutSession as any).message);
       return;
     }
 
     const stripe = await getStripe()
+    const { error } = await stripe!.redirectToCheckout({
+      sessionId: checkoutSession.id,
+    });
+
+    console.error(error.message);
+
+    setLoading(false);
   }
 
   return (
