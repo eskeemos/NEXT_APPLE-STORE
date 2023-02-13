@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CheckIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
+import Button from '../components/Button';
+import { useMediaQuery } from 'react-responsive';
+import Currency from 'react-currency-formatter';
 
 function Success() {
   const router = useRouter();
   const { session_id } = router.query;
+  const [mounted, setMounted] = useState(false);
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1024px)" });
+  const [showOrderSummary, setShowOrderSummary] = useState(false);
+  const showOrderSummaryCondition = isTabletOrMobile ? showOrderSummary : true;
+  const handleShowOrderSummary = () => {
+    setShowOrderSummary(!showOrderSummary)
+  };
+  // const subtotal = products.reduce(
+  //   (acc, product) => acc + product.price.unit_amount / 100, 0);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div>
@@ -48,9 +64,9 @@ function Success() {
                 Order #{session_id?.slice(-5)}
               </p>
               <h4 className='text-lg'>
-                Thank you{" "} 
+                Thank you{" "}
                 {/* {session ? session.user?.name?.split(" ")[0] : "Guest"} */}
-                </h4>
+              </h4>
             </div>
           </div>
           <div className='mx-4 divide-y divide-gray-300 rounded-md border border-gray-300 p-4 lg:ml-14 mt-2'>
@@ -67,10 +83,46 @@ function Success() {
               <p>CNB21441622</p>
             </div>
           </div>
-          <div>
-
+          <div className='my-4 mx-4 space-y-2 rounded-md border border-gray-300 p-4 lg:ml-14'>
+            <p>Order updates</p>
+            <p className="text-sm text-gray-600">
+              You'll get shopping and delivery updates by email and text
+            </p>
+          </div>
+          <div className='mx-4'>
+            <p className="hidden lg:inline">Need help? Contact us</p>
+            {mounted && (
+              <Button title='Continue Shopping' onClick={() => router.push("/")} style={isTabletOrMobile ? 'w-full' : ''} />
+            )}
           </div>
         </section>
+        {mounted && (
+          <section>
+            <div className={`w-full ${showOrderSummaryCondition && 'border-b'} border-gray-300 text-sm lg:hidden`}>
+              <div className='mx-auto flex max-w-xl items-center justify-between px-4 py-6'>
+                <button onClick={handleShowOrderSummary} className="flex items-center space-x-2">
+                  <ShoppingCartIcon className='w-6 h-6' />
+                  <p>Show order summary</p>
+                  {showOrderSummaryCondition ? (
+                    <ChevronUpIcon className='h-4 w-4' />
+                  ) : (
+                    <ChevronDownIcon className='h-4 w-4' />
+                  )}
+                </button>
+                <p className='text-xl font-medium text-black'>
+                  {/* <Currency quantity={subtotal + 20} /> */}
+                </p>
+              </div>
+            </div>
+            {showOrderSummaryCondition && (
+              <div>
+                <div>
+                  {/* 5:43:30 */}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
       </main>
     </div>
   )

@@ -19,6 +19,7 @@
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-redux": "^8.0.5",
+    "react-responsive": "^9.0.2",
     "stripe": "^11.10.0"
   },
   "devDependencies": {
