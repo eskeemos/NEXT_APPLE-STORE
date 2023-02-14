@@ -4,10 +4,11 @@ import React from 'react'
 import { MagnifyingGlassIcon, ShoppingBagIcon, UserIcon } from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
 import { selectBasketItems } from '../redux/basketSlice'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 function Header() {
   const items = useSelector(selectBasketItems);
-  const session = false;
+  const { data: session } = useSession();
   return (
     <header className='sticky h-16 top-0 z-30 flex w-full items-center justify-between bg-[#E7ECEE] shadow-sm p-4'>
       <div className='flex items-center justify-center md:w-1/5'>
@@ -31,12 +32,12 @@ function Header() {
         </Link>
         {session ? (
           <Image src={
-            // session.user?.image || 
+            session.user?.image || 
             "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} alt="avatars" className='cursor-pointer rounded-full' width={34} height={34}
-          // onClick={() => signOut()} 
+            onClick={() => signOut()}
           />
         ) : (<UserIcon className='headerIcon'
-        // onClick={() => signIn() 
+          onClick={() => signIn()}
         />)}
       </div>
     </header>

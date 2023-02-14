@@ -9,13 +9,14 @@ import { useMediaQuery } from 'react-responsive';
 import Currency from 'react-currency-formatter';
 import { GetServerSideProps } from 'next';
 import { fetchLineItems } from '../utils/fetchLineItems';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   products: StripeProduct[]
 }
 
 function Success({ products }: Props) {
-
+  const { data: session } = useSession();
   const router = useRouter();
   const { session_id } = router.query;
   const [mounted, setMounted] = useState(false);
@@ -38,7 +39,7 @@ function Success({ products }: Props) {
         <title>Thank you! - Apple</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className='mx-auto max-w-xl p-5'>
+      <header className='mx-auto max-w-xl p-5 lg:p-0'>
         <Link href="/">
           <div className="relative w-8 cursor-pointer transition lg:hidden">
             <Image
@@ -50,8 +51,8 @@ function Success({ products }: Props) {
           </div>
         </Link>
       </header>
-      <main className=''>
-        <section className='order-2 mx-auto max-w-xl pb-12 lg:mx-0 lg:max-w-none lg:pr-16 lg:pt-16 xl:pl-16 2xl:pl-44'>
+      <main className='grid grid-cols-1 lg:grid-cols-9'>
+        <section className='order-2 lg:col-span-5 mx-auto max-w-xl pb-12 lg:mx-0 lg:max-w-none lg:pr-16 lg:pt-16 xl:pl-16 2xl:pl-44'>
           <Link href="/">
             <div className="relative ml-4 hidden h-16 w-8 cursor-pointer transition lg:block">
               <Image
@@ -62,7 +63,7 @@ function Success({ products }: Props) {
               />
             </div>
           </Link>
-          <div className='ml-4 flex space-x-4 lg:ml-14 xl:ml-0'>
+          <div className='ml-4 flex space-x-4 lg:ml-14 xl:ml-0 mt-3 lg:mt-0'>
             <div className='flex h-11 w-11 items-center justify-center rounded-full border-2 border-black'>
               <CheckIcon className='h-8 w-8' />
             </div>
@@ -72,7 +73,7 @@ function Success({ products }: Props) {
               </p>
               <h4 className='text-lg'>
                 Thank you{" "}
-                {/* {session ? session.user?.name?.split(" ")[0] : "Guest"} */}
+                {session ? session.user?.name?.split(" ")[0] : "Guest"}
               </h4>
             </div>
           </div>
@@ -96,7 +97,7 @@ function Success({ products }: Props) {
               You'll get shopping and delivery updates by email and text
             </p>
           </div>
-          <div className='mx-4'>
+          <div className='mx-4 flex flex-col items-center justify-between text-sm lg:ml-14 lg:flex-row'>
             <p className="hidden lg:inline">Need help? Contact us</p>
             {mounted && (
               <Button title='Continue Shopping' onClick={() => router.push("/")} style={isTabletOrMobile ? 'w-full' : ''} />
@@ -104,7 +105,7 @@ function Success({ products }: Props) {
           </div>
         </section>
         {mounted && (
-          <section>
+          <section className='overflow-y-auto border-y border-l border-gray-300 bg-[#FAFAFA] lg:order-2 lg:col-span-4 lg:h-screen lg:border-y-0'>
             <div className={`w-full ${showOrderSummaryCondition && 'border-b'} border-gray-300 text-sm lg:hidden`}>
               <div className='mx-auto flex max-w-xl items-center justify-between px-4 py-6'>
                 <button onClick={handleShowOrderSummary} className="flex items-center space-x-2">
@@ -122,8 +123,8 @@ function Success({ products }: Props) {
               </div>
             </div>
             {showOrderSummaryCondition && (
-              <div>
-                <div>
+              <div className='mx-auto max-w-xl divide-y border-gray-300 p-4 lg:mx-0 lg:max-w-lg lg:px-10 lg:py-16'>
+                <div className='space-y-4 pb-4'>
                   {products.map(product => (
                     <div key={product.id} className="flex items-center space-x-4 text-sm font-medium">
                       <div className='relative flex h-16 w-16 items-center justify-center rounded-md border border-gray-300 bg-[#F1F1F1] tetx-xs text-white'>
@@ -149,6 +150,26 @@ function Success({ products }: Props) {
                     <p className='text-gray-500'>Subtotal</p>
                     <p className='font-medium'>
                       <Currency quantity={subtotal} />
+                    </p>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <p className="text-gray-500">Discount</p>
+                    <p className="text-gray-500"></p>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <p className="text-gray-500">Shipping</p>
+                    <p className="font-medium">
+                      <Currency quantity={20} currency="USD" />
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between pt-4">
+                    <p>Total</p>
+                    <p className="flex items-center gap-x-2 text-xs text-gray-500">
+                      USD <span className='text-xl font-medium text-black'>
+                        <Currency quantity={subtotal + 20} />
+                      </span>
                     </p>
                   </div>
                 </div>
